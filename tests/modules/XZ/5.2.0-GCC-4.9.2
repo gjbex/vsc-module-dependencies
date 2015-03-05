@@ -1,0 +1,30 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   xz: XZ utilities - Homepage: http://tukaani.org/xz/
+    }
+}
+
+module-whatis {Description: xz: XZ utilities - Homepage: http://tukaani.org/xz/}
+
+set root    /apps/leuven/thinking/2015a/software/XZ/5.2.0-GCC-4.9.2
+
+conflict XZ
+
+if { ![is-loaded GCC/4.9.2] } {
+    module load GCC/4.9.2
+}
+
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	MANPATH		$root/share/man
+prepend-path	PATH		$root/bin
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTXZ		"$root"
+setenv	EBVERSIONXZ		"5.2.0"
+setenv	EBDEVELXZ		"$root/easybuild/XZ-5.2.0-GCC-4.9.2-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

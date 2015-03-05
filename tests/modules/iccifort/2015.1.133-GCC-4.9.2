@@ -1,0 +1,28 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Intel C, C++ and Fortran compilers - Homepage: http://software.intel.com/en-us/intel-cluster-toolkit-compiler/
+    }
+}
+
+module-whatis {Description: Intel C, C++ and Fortran compilers - Homepage: http://software.intel.com/en-us/intel-cluster-toolkit-compiler/}
+
+set root    /apps/leuven/thinking/2015a/software/iccifort/2015.1.133-GCC-4.9.2
+
+conflict iccifort
+
+if { ![is-loaded icc/2015.1.133-GCC-4.9.2] } {
+    module load icc/2015.1.133-GCC-4.9.2
+}
+
+if { ![is-loaded ifort/2015.1.133-GCC-4.9.2] } {
+    module load ifort/2015.1.133-GCC-4.9.2
+}
+
+
+setenv	EBROOTICCIFORT		"$root"
+setenv	EBVERSIONICCIFORT		"2015.1.133"
+setenv	EBDEVELICCIFORT		"$root/easybuild/iccifort-2015.1.133-GCC-4.9.2-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

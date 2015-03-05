@@ -1,0 +1,28 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   The GNU Core Utilities are the basic file, shell and text manipulation utilities of the
+ GNU operating system.  These are the core utilities which are expected to exist on every operating system. - Homepage: http://www.gnu.org/software/coreutils/
+    }
+}
+
+module-whatis {Description: The GNU Core Utilities are the basic file, shell and text manipulation utilities of the
+ GNU operating system.  These are the core utilities which are expected to exist on every operating system. - Homepage: http://www.gnu.org/software/coreutils/}
+
+set root    /apps/leuven/thinking/2015a/software/Coreutils/8.23-GCC-4.9.2
+
+conflict Coreutils
+
+if { ![is-loaded GCC/4.9.2] } {
+    module load GCC/4.9.2
+}
+
+prepend-path	MANPATH		$root/share/man
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTCOREUTILS		"$root"
+setenv	EBVERSIONCOREUTILS		"8.23"
+setenv	EBDEVELCOREUTILS		"$root/easybuild/Coreutils-8.23-GCC-4.9.2-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

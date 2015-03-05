@@ -1,0 +1,33 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   C and C++ compiler from Intel - Homepage: http://software.intel.com/en-us/intel-compilers/
+    }
+}
+
+module-whatis {Description: C and C++ compiler from Intel - Homepage: http://software.intel.com/en-us/intel-compilers/}
+
+set root    /apps/leuven/thinking/2015a/software/icc/2015.1.133-GCC-4.9.2
+
+conflict icc
+
+if { ![is-loaded GCC/4.9.2] } {
+    module load GCC/4.9.2
+}
+
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LD_LIBRARY_PATH		$root/lib/intel64
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib/intel64
+prepend-path	MANPATH		$root/man
+prepend-path	MANPATH		$root/man/en_US
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTICC		"$root"
+setenv	EBVERSIONICC		"2015.1.133"
+setenv	EBDEVELICC		"$root/easybuild/icc-2015.1.133-GCC-4.9.2-easybuild-devel"
+
+prepend-path	INTEL_LICENSE_FILE		/apps/leuven/etc/licenses/USE_SERVER.lic
+prepend-path	NLSPATH		$root/$root/idb/intel64/locale/%l_%t/%N
+
+# Built with EasyBuild version 1.16.1

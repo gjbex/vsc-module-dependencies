@@ -1,0 +1,36 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   mc-4.6.1: User-friendly file manager and visual shell - Homepage: https://www.midnight-commander.org/
+    }
+}
+
+module-whatis {Description: mc-4.6.1: User-friendly file manager and visual shell - Homepage: https://www.midnight-commander.org/}
+
+set root    /apps/leuven/thinking/2015a/software/mc/4.8.13-GCC-4.9.2
+
+conflict mc
+
+if { ![is-loaded GCC/4.9.2] } {
+    module load GCC/4.9.2
+}
+
+if { ![is-loaded GLib/2.42.1-GCC-4.9.2] } {
+    module load GLib/2.42.1-GCC-4.9.2
+}
+
+if { ![is-loaded S-Lang/2.3.0-GCC-4.9.2] } {
+    module load S-Lang/2.3.0-GCC-4.9.2
+}
+
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	MANPATH		$root/share/man
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTMC		"$root"
+setenv	EBVERSIONMC		"4.8.13"
+setenv	EBDEVELMC		"$root/easybuild/mc-4.8.13-GCC-4.9.2-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

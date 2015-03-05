@@ -1,0 +1,46 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Intel Math Kernel Library is a library of highly optimized,
+ extensively threaded math routines for science, engineering, and financial
+ applications that require maximum performance. Core math functions include
+ BLAS, LAPACK, ScaLAPACK, Sparse Solvers, Fast Fourier Transforms, Vector Math, and more. - Homepage: http://software.intel.com/en-us/intel-mkl/
+    }
+}
+
+module-whatis {Description: Intel Math Kernel Library is a library of highly optimized,
+ extensively threaded math routines for science, engineering, and financial
+ applications that require maximum performance. Core math functions include
+ BLAS, LAPACK, ScaLAPACK, Sparse Solvers, Fast Fourier Transforms, Vector Math, and more. - Homepage: http://software.intel.com/en-us/intel-mkl/}
+
+set root    /apps/leuven/thinking/2015a/software/imkl/11.2.1.133-iimpi-7.2.3-GCC-4.9.2
+
+conflict imkl
+
+if { ![is-loaded iimpi/7.2.3-GCC-4.9.2] } {
+    module load iimpi/7.2.3-GCC-4.9.2
+}
+
+prepend-path	CPATH		$root/mkl/include
+prepend-path	CPATH		$root/mkl/include/fftw
+prepend-path	FPATH		$root/mkl/include
+prepend-path	FPATH		$root/mkl/include/fftw
+prepend-path	LD_LIBRARY_PATH		$root/lib/intel64
+prepend-path	LD_LIBRARY_PATH		$root/mkl/lib/intel64
+prepend-path	LIBRARY_PATH		$root/lib/intel64
+prepend-path	LIBRARY_PATH		$root/mkl/lib/intel64
+prepend-path	MIC_LD_LIBRARY_PATH		$root/lib/mic
+prepend-path	MIC_LD_LIBRARY_PATH		$root/mkl/lib/mic
+prepend-path	PATH		$root/bin
+prepend-path	PATH		$root/mkl/bin
+prepend-path	PATH		$root/mkl/bin/intel64
+
+setenv	EBROOTIMKL		"$root"
+setenv	EBVERSIONIMKL		"11.2.1.133"
+setenv	EBDEVELIMKL		"$root/easybuild/imkl-11.2.1.133-iimpi-7.2.3-GCC-4.9.2-easybuild-devel"
+
+prepend-path	INTEL_LICENSE_FILE		/apps/leuven/etc/licenses/USE_SERVER.lic
+prepend-path	NLSPATH		$root/$root/idb/intel64/locale/%l_%t/%N
+setenv	MKLROOT		"$root"
+
+# Built with EasyBuild version 1.16.1

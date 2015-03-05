@@ -1,0 +1,38 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   HDF5 is a unique technology suite that makes possible the management of 
+ extremely large and complex data collections. - Homepage: http://www.hdfgroup.org/HDF5/
+    }
+}
+
+module-whatis {Description: HDF5 is a unique technology suite that makes possible the management of 
+ extremely large and complex data collections. - Homepage: http://www.hdfgroup.org/HDF5/}
+
+set root    /apps/leuven/thinking/2015a/software/HDF5/1.8.13-intel-2015a
+
+conflict HDF5
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded zlib/1.2.8-intel-2015a] } {
+    module load zlib/1.2.8-intel-2015a
+}
+
+if { ![is-loaded Szip/2.1-intel-2015a] } {
+    module load Szip/2.1-intel-2015a
+}
+
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTHDF5		"$root"
+setenv	EBVERSIONHDF5		"1.8.13"
+setenv	EBDEVELHDF5		"$root/easybuild/HDF5-1.8.13-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

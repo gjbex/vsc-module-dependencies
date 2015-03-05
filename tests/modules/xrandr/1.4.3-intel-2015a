@@ -1,0 +1,42 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   xrandr-1.3.5: Primitive command line interface to RandR extension - Homepage: http://xorg.freedesktop.org/
+    }
+}
+
+module-whatis {Description: xrandr-1.3.5: Primitive command line interface to RandR extension - Homepage: http://xorg.freedesktop.org/}
+
+set root    /apps/leuven/thinking/2015a/software/xrandr/1.4.3-intel-2015a
+
+conflict xrandr
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded xproto/7.0.27-intel-2015a] } {
+    module load xproto/7.0.27-intel-2015a
+}
+
+if { ![is-loaded libXrender/0.9.8-intel-2015a] } {
+    module load libXrender/0.9.8-intel-2015a
+}
+
+if { ![is-loaded libX11/1.6.2-intel-2015a-Python-2.7.9] } {
+    module load libX11/1.6.2-intel-2015a-Python-2.7.9
+}
+
+if { ![is-loaded libXrandr/1.4.2-intel-2015a] } {
+    module load libXrandr/1.4.2-intel-2015a
+}
+
+prepend-path	MANPATH		$root/share/man
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTXRANDR		"$root"
+setenv	EBVERSIONXRANDR		"1.4.3"
+setenv	EBDEVELXRANDR		"$root/easybuild/xrandr-1.4.3-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

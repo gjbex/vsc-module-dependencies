@@ -1,0 +1,26 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   parallel: Build and execute shell commands in parallel - Homepage: http://savannah.gnu.org/projects/parallel/
+    }
+}
+
+module-whatis {Description: parallel: Build and execute shell commands in parallel - Homepage: http://savannah.gnu.org/projects/parallel/}
+
+set root    /apps/leuven/thinking/2015a/software/Parallel/20141122-GCC-4.9.2
+
+conflict Parallel
+
+if { ![is-loaded GCC/4.9.2] } {
+    module load GCC/4.9.2
+}
+
+prepend-path	MANPATH		$root/share/man
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTPARALLEL		"$root"
+setenv	EBVERSIONPARALLEL		"20141122"
+setenv	EBDEVELPARALLEL		"$root/easybuild/Parallel-20141122-GCC-4.9.2-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

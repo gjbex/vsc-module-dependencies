@@ -1,0 +1,32 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   XQilla is an XQuery and XPath 2 library and command line utility written in C++, implemented on top of the Xerces-C∞ library. - Homepage: http://xqilla.sourceforge.net/HomePage
+    }
+}
+
+module-whatis {Description: XQilla is an XQuery and XPath 2 library and command line utility written in C++, implemented on top of the Xerces-C∞ library. - Homepage: http://xqilla.sourceforge.net/HomePage}
+
+set root    /apps/leuven/thinking/2015a/software/XQilla/2.3.0-intel-2015a
+
+conflict XQilla
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded Xerces-C++/3.1.1-intel-2015a] } {
+    module load Xerces-C++/3.1.1-intel-2015a
+}
+
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTXQILLA		"$root"
+setenv	EBVERSIONXQILLA		"2.3.0"
+setenv	EBDEVELXQILLA		"$root/easybuild/XQilla-2.3.0-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

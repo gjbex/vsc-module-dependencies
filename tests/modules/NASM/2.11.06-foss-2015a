@@ -1,0 +1,26 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   NASM: General-purpose x86 assembler - Homepage: http://www.nasm.us/
+    }
+}
+
+module-whatis {Description: NASM: General-purpose x86 assembler - Homepage: http://www.nasm.us/}
+
+set root    /apps/leuven/thinking/2015a/software/NASM/2.11.06-foss-2015a
+
+conflict NASM
+
+if { ![is-loaded foss/2015a] } {
+    module load foss/2015a
+}
+
+prepend-path	MANPATH		$root/share/man
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTNASM		"$root"
+setenv	EBVERSIONNASM		"2.11.06"
+setenv	EBDEVELNASM		"$root/easybuild/NASM-2.11.06-foss-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

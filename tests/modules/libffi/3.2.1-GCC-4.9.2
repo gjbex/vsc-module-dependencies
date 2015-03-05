@@ -1,0 +1,32 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   The libffi library provides a portable, high level programming interface to various calling
+conventions. This allows a programmer to call any function specified by a call interface description at run-time. - Homepage: http://sourceware.org/libffi/
+    }
+}
+
+module-whatis {Description: The libffi library provides a portable, high level programming interface to various calling
+conventions. This allows a programmer to call any function specified by a call interface description at run-time. - Homepage: http://sourceware.org/libffi/}
+
+set root    /apps/leuven/thinking/2015a/software/libffi/3.2.1-GCC-4.9.2
+
+conflict libffi
+
+if { ![is-loaded GCC/4.9.2] } {
+    module load GCC/4.9.2
+}
+
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LD_LIBRARY_PATH		$root/lib64
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib64
+prepend-path	MANPATH		$root/share/man
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTLIBFFI		"$root"
+setenv	EBVERSIONLIBFFI		"3.2.1"
+setenv	EBDEVELLIBFFI		"$root/easybuild/libffi-3.2.1-GCC-4.9.2-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

@@ -1,0 +1,26 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   mawk is an interpreter for the AWK Programming Language. - Homepage: http://invisible-island.net/mawk/mawk.html
+    }
+}
+
+module-whatis {Description: mawk is an interpreter for the AWK Programming Language. - Homepage: http://invisible-island.net/mawk/mawk.html}
+
+set root    /apps/leuven/thinking/2015a/software/mawk/1.3.4-20141206-GCC-4.9.2
+
+conflict mawk
+
+if { ![is-loaded GCC/4.9.2] } {
+    module load GCC/4.9.2
+}
+
+prepend-path	MANPATH		$root/share/man
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTMAWK		"$root"
+setenv	EBVERSIONMAWK		"1.3.4-20141206"
+setenv	EBDEVELMAWK		"$root/easybuild/mawk-1.3.4-20141206-GCC-4.9.2-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

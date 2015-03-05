@@ -1,0 +1,36 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Mercurial is a free, distributed source control management tool. It efficiently handles projects
+of any size and offers an easy and intuitive interface.
+ - Homepage: http://mercurial.selenic.com/
+    }
+}
+
+module-whatis {Description: Mercurial is a free, distributed source control management tool. It efficiently handles projects
+of any size and offers an easy and intuitive interface.
+ - Homepage: http://mercurial.selenic.com/}
+
+set root    /apps/leuven/thinking/2015a/software/Mercurial/3.2.4-foss-2015a-Python-2.7.9
+
+conflict Mercurial
+
+if { ![is-loaded foss/2015a] } {
+    module load foss/2015a
+}
+
+if { ![is-loaded Python/2.7.9-foss-2015a] } {
+    module load Python/2.7.9-foss-2015a
+}
+
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTMERCURIAL		"$root"
+setenv	EBVERSIONMERCURIAL		"3.2.4"
+setenv	EBDEVELMERCURIAL		"$root/easybuild/Mercurial-3.2.4-foss-2015a-Python-2.7.9-easybuild-devel"
+
+prepend-path	PYTHONPATH		$root/lib/python2.7/site-packages
+
+# Built with EasyBuild version 1.16.1

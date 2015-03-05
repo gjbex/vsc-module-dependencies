@@ -1,0 +1,32 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Intel C/C++ and Fortran compilers, alongside Intel MPI. - Homepage: http://software.intel.com/en-us/intel-cluster-toolkit-compiler/
+    }
+}
+
+module-whatis {Description: Intel C/C++ and Fortran compilers, alongside Intel MPI. - Homepage: http://software.intel.com/en-us/intel-cluster-toolkit-compiler/}
+
+set root    /apps/leuven/thinking/2015a/software/iimpi/7.2.3-GCC-4.9.2
+
+conflict iimpi
+
+if { ![is-loaded icc/2015.1.133-GCC-4.9.2] } {
+    module load icc/2015.1.133-GCC-4.9.2
+}
+
+if { ![is-loaded ifort/2015.1.133-GCC-4.9.2] } {
+    module load ifort/2015.1.133-GCC-4.9.2
+}
+
+if { ![is-loaded impi/5.0.2.044-iccifort-2015.1.133-GCC-4.9.2] } {
+    module load impi/5.0.2.044-iccifort-2015.1.133-GCC-4.9.2
+}
+
+
+setenv	EBROOTIIMPI		"$root"
+setenv	EBVERSIONIIMPI		"7.2.3"
+setenv	EBDEVELIIMPI		"$root/easybuild/iimpi-7.2.3-GCC-4.9.2-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

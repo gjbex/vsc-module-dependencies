@@ -1,0 +1,39 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Libxml2 is the XML C parser and 
+toolchain developed for the Gnome project
+ (but usable outside of the Gnome platform). - Homepage: http://xmlsoft.org/
+    }
+}
+
+module-whatis {Description: Libxml2 is the XML C parser and 
+toolchain developed for the Gnome project
+ (but usable outside of the Gnome platform). - Homepage: http://xmlsoft.org/}
+
+set root    /apps/leuven/thinking/2015a/software/libxml2/2.9.2-foss-2015a
+
+conflict libxml2
+
+if { ![is-loaded foss/2015a] } {
+    module load foss/2015a
+}
+
+if { ![is-loaded zlib/1.2.8-foss-2015a] } {
+    module load zlib/1.2.8-foss-2015a
+}
+
+prepend-path	ACLOCAL_PATH		$root/share/aclocal
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	MANPATH		$root/share/man
+prepend-path	PATH		$root/bin
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTLIBXML2		"$root"
+setenv	EBVERSIONLIBXML2		"2.9.2"
+setenv	EBDEVELLIBXML2		"$root/easybuild/libxml2-2.9.2-foss-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

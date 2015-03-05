@@ -1,0 +1,27 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   ARPACK is a collection of Fortran77 subroutines designed to solve large scale eigenvalue problems. - Homepage: http://forge.scilab.org/index.php/p/arpack-ng/
+    }
+}
+
+module-whatis {Description: ARPACK is a collection of Fortran77 subroutines designed to solve large scale eigenvalue problems. - Homepage: http://forge.scilab.org/index.php/p/arpack-ng/}
+
+set root    /apps/leuven/thinking/2015a/software/arpack-ng/3.1.5-intel-2015a
+
+conflict arpack-ng
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTARPACKMINNG		"$root"
+setenv	EBVERSIONARPACKMINNG		"3.1.5"
+setenv	EBDEVELARPACKMINNG		"$root/easybuild/arpack-ng-3.1.5-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

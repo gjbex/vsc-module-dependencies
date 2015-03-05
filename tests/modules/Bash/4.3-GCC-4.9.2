@@ -1,0 +1,30 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Bash is an sh-compatible command language interpreter that executes commands 
+  read from the standard input or from a file.  Bash also incorporates useful features from the 
+  Korn and C shells (ksh and csh). - Homepage: http://www.gnu.org/software/bash
+    }
+}
+
+module-whatis {Description: Bash is an sh-compatible command language interpreter that executes commands 
+  read from the standard input or from a file.  Bash also incorporates useful features from the 
+  Korn and C shells (ksh and csh). - Homepage: http://www.gnu.org/software/bash}
+
+set root    /apps/leuven/thinking/2015a/software/Bash/4.3-GCC-4.9.2
+
+conflict Bash
+
+if { ![is-loaded GCC/4.9.2] } {
+    module load GCC/4.9.2
+}
+
+prepend-path	MANPATH		$root/share/man
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTBASH		"$root"
+setenv	EBVERSIONBASH		"4.3"
+setenv	EBDEVELBASH		"$root/easybuild/Bash-4.3-GCC-4.9.2-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

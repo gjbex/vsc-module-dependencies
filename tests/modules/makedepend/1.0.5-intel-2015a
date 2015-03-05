@@ -1,0 +1,26 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   The makedepend package contains a C-preprocessor like utility to determine build-time dependencies. - Homepage: http://www.linuxfromscratch.org/blfs/view/svn/x/makedepend.html
+    }
+}
+
+module-whatis {Description: The makedepend package contains a C-preprocessor like utility to determine build-time dependencies. - Homepage: http://www.linuxfromscratch.org/blfs/view/svn/x/makedepend.html}
+
+set root    /apps/leuven/thinking/2015a/software/makedepend/1.0.5-intel-2015a
+
+conflict makedepend
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+prepend-path	MANPATH		$root/share/man
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTMAKEDEPEND		"$root"
+setenv	EBVERSIONMAKEDEPEND		"1.0.5"
+setenv	EBDEVELMAKEDEPEND		"$root/easybuild/makedepend-1.0.5-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

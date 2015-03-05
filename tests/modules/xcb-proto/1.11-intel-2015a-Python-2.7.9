@@ -1,0 +1,33 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   The X protocol C-language Binding (XCB) is a replacement for Xlib featuring a small footprint,
+latency hiding, direct access to the protocol, improved threading support, and extensibility. - Homepage: http://xcb.freedesktop.org/
+    }
+}
+
+module-whatis {Description: The X protocol C-language Binding (XCB) is a replacement for Xlib featuring a small footprint,
+latency hiding, direct access to the protocol, improved threading support, and extensibility. - Homepage: http://xcb.freedesktop.org/}
+
+set root    /apps/leuven/thinking/2015a/software/xcb-proto/1.11-intel-2015a-Python-2.7.9
+
+conflict xcb-proto
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded Python/2.7.9-intel-2015a] } {
+    module load Python/2.7.9-intel-2015a
+}
+
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTXCBMINPROTO		"$root"
+setenv	EBVERSIONXCBMINPROTO		"1.11"
+setenv	EBDEVELXCBMINPROTO		"$root/easybuild/xcb-proto-1.11-intel-2015a-Python-2.7.9-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

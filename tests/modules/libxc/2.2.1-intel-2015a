@@ -1,0 +1,31 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Libxc is a library of exchange-correlation functionals for density-functional theory.
+ The aim is to provide a portable, well tested and reliable set of exchange and correlation functionals. - Homepage: http://www.tddft.org/programs/octopus/wiki/index.php/Libxc
+    }
+}
+
+module-whatis {Description: Libxc is a library of exchange-correlation functionals for density-functional theory.
+ The aim is to provide a portable, well tested and reliable set of exchange and correlation functionals. - Homepage: http://www.tddft.org/programs/octopus/wiki/index.php/Libxc}
+
+set root    /apps/leuven/thinking/2015a/software/libxc/2.2.1-intel-2015a
+
+conflict libxc
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PATH		$root/bin
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTLIBXC		"$root"
+setenv	EBVERSIONLIBXC		"2.2.1"
+setenv	EBDEVELLIBXC		"$root/easybuild/libxc-2.2.1-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

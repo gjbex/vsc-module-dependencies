@@ -1,0 +1,40 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Tk is an open source, cross-platform widget toolchain that provides a library of basic elements for building
+ a graphical user interface (GUI) in many different programming languages. - Homepage: http://www.tcl.tk/
+    }
+}
+
+module-whatis {Description: Tk is an open source, cross-platform widget toolchain that provides a library of basic elements for building
+ a graphical user interface (GUI) in many different programming languages. - Homepage: http://www.tcl.tk/}
+
+set root    /apps/leuven/thinking/2015a/software/Tk/8.6.3-intel-2015a
+
+conflict Tk
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded Tcl/8.6.3-intel-2015a] } {
+    module load Tcl/8.6.3-intel-2015a
+}
+
+if { ![is-loaded libX11/1.6.2-intel-2015a-Python-2.7.9] } {
+    module load libX11/1.6.2-intel-2015a-Python-2.7.9
+}
+
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	MANPATH		$root/man
+prepend-path	PATH		$root/bin
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTTK		"$root"
+setenv	EBVERSIONTK		"8.6.3"
+setenv	EBDEVELTK		"$root/easybuild/Tk-8.6.3-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

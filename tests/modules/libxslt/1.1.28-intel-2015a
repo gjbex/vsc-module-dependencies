@@ -1,0 +1,41 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Libxslt is the XSLT C library developed for the GNOME project
+ (but usable outside of the Gnome platform). - Homepage: http://xmlsoft.org/
+    }
+}
+
+module-whatis {Description: Libxslt is the XSLT C library developed for the GNOME project
+ (but usable outside of the Gnome platform). - Homepage: http://xmlsoft.org/}
+
+set root    /apps/leuven/thinking/2015a/software/libxslt/1.1.28-intel-2015a
+
+conflict libxslt
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded zlib/1.2.8-intel-2015a] } {
+    module load zlib/1.2.8-intel-2015a
+}
+
+if { ![is-loaded libxml2/2.9.2-intel-2015a] } {
+    module load libxml2/2.9.2-intel-2015a
+}
+
+prepend-path	ACLOCAL_PATH		$root/share/aclocal
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	MANPATH		$root/share/man
+prepend-path	PATH		$root/bin
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTLIBXSLT		"$root"
+setenv	EBVERSIONLIBXSLT		"1.1.28"
+setenv	EBDEVELLIBXSLT		"$root/easybuild/libxslt-1.1.28-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

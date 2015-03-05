@@ -1,0 +1,36 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Intel Cluster Toolkit Compiler Edition provides Intel C/C++ and Fortran compilers, Intel MPI & Intel MKL. - Homepage: http://software.intel.com/en-us/intel-cluster-toolkit-compiler/
+    }
+}
+
+module-whatis {Description: Intel Cluster Toolkit Compiler Edition provides Intel C/C++ and Fortran compilers, Intel MPI & Intel MKL. - Homepage: http://software.intel.com/en-us/intel-cluster-toolkit-compiler/}
+
+set root    /apps/leuven/thinking/2015a/software/intel/2015a
+
+conflict intel
+
+if { ![is-loaded icc/2015.1.133-GCC-4.9.2] } {
+    module load icc/2015.1.133-GCC-4.9.2
+}
+
+if { ![is-loaded ifort/2015.1.133-GCC-4.9.2] } {
+    module load ifort/2015.1.133-GCC-4.9.2
+}
+
+if { ![is-loaded impi/5.0.2.044-iccifort-2015.1.133-GCC-4.9.2] } {
+    module load impi/5.0.2.044-iccifort-2015.1.133-GCC-4.9.2
+}
+
+if { ![is-loaded imkl/11.2.1.133-iimpi-7.2.3-GCC-4.9.2] } {
+    module load imkl/11.2.1.133-iimpi-7.2.3-GCC-4.9.2
+}
+
+
+setenv	EBROOTINTEL		"$root"
+setenv	EBVERSIONINTEL		"2015a"
+setenv	EBDEVELINTEL		"$root/easybuild/intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

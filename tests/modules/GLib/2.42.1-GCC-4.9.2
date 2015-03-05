@@ -1,0 +1,38 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   GLib is one of the base libraries of the GTK+ project - Homepage: http://www.gtk.org/
+    }
+}
+
+module-whatis {Description: GLib is one of the base libraries of the GTK+ project - Homepage: http://www.gtk.org/}
+
+set root    /apps/leuven/thinking/2015a/software/GLib/2.42.1-GCC-4.9.2
+
+conflict GLib
+
+if { ![is-loaded GCC/4.9.2] } {
+    module load GCC/4.9.2
+}
+
+if { ![is-loaded libffi/3.2.1-GCC-4.9.2] } {
+    module load libffi/3.2.1-GCC-4.9.2
+}
+
+if { ![is-loaded gettext/0.19.4-GCC-4.9.2] } {
+    module load gettext/0.19.4-GCC-4.9.2
+}
+
+prepend-path	ACLOCAL_PATH		$root/share/aclocal
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PATH		$root/bin
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTGLIB		"$root"
+setenv	EBVERSIONGLIB		"2.42.1"
+setenv	EBDEVELGLIB		"$root/easybuild/GLib-2.42.1-GCC-4.9.2-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

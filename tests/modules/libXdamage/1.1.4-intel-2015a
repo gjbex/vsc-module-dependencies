@@ -1,0 +1,48 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Common X Extensions library - Homepage: http://www.freedesktop.org/wiki/Software/xlibs
+    }
+}
+
+module-whatis {Description: Common X Extensions library - Homepage: http://www.freedesktop.org/wiki/Software/xlibs}
+
+set root    /apps/leuven/thinking/2015a/software/libXdamage/1.1.4-intel-2015a
+
+conflict libXdamage
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded xproto/7.0.27-intel-2015a] } {
+    module load xproto/7.0.27-intel-2015a
+}
+
+if { ![is-loaded libX11/1.6.2-intel-2015a-Python-2.7.9] } {
+    module load libX11/1.6.2-intel-2015a-Python-2.7.9
+}
+
+if { ![is-loaded xextproto/7.3.0-intel-2015a] } {
+    module load xextproto/7.3.0-intel-2015a
+}
+
+if { ![is-loaded fixesproto/5.0-intel-2015a] } {
+    module load fixesproto/5.0-intel-2015a
+}
+
+if { ![is-loaded libXfixes/5.0.1-intel-2015a] } {
+    module load libXfixes/5.0.1-intel-2015a
+}
+
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTLIBXDAMAGE		"$root"
+setenv	EBVERSIONLIBXDAMAGE		"1.1.4"
+setenv	EBDEVELLIBXDAMAGE		"$root/easybuild/libXdamage-1.1.4-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

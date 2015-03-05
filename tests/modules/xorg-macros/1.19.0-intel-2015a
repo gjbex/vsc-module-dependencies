@@ -1,0 +1,30 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   X.org macros utilities. - Homepage: http://cgit.freedesktop.org/xorg/util/macros
+    }
+}
+
+module-whatis {Description: X.org macros utilities. - Homepage: http://cgit.freedesktop.org/xorg/util/macros}
+
+set root    /apps/leuven/thinking/2015a/software/xorg-macros/1.19.0-intel-2015a
+
+conflict xorg-macros
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded Autoconf/2.69-GCC-4.9.2] } {
+    module load Autoconf/2.69-GCC-4.9.2
+}
+
+prepend-path	ACLOCAL_PATH		$root/share/aclocal
+prepend-path	PKG_CONFIG_PATH		$root/share/pkgconfig
+
+setenv	EBROOTXORGMINMACROS		"$root"
+setenv	EBVERSIONXORGMINMACROS		"1.19.0"
+setenv	EBDEVELXORGMINMACROS		"$root/easybuild/xorg-macros-1.19.0-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

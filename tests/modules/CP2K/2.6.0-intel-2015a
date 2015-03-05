@@ -1,0 +1,39 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   CP2K is a freely available (GPL) program, written in Fortran 95, to perform atomistic and molecular
+ simulations of solid state, liquid, molecular and biological systems. It provides a general framework for different
+ methods such as e.g. density functional theory (DFT) using a mixed Gaussian and plane waves approach (GPW), and
+ classical pair and many-body potentials.  - Homepage: http://www.cp2k.org/
+    }
+}
+
+module-whatis {Description: CP2K is a freely available (GPL) program, written in Fortran 95, to perform atomistic and molecular
+ simulations of solid state, liquid, molecular and biological systems. It provides a general framework for different
+ methods such as e.g. density functional theory (DFT) using a mixed Gaussian and plane waves approach (GPW), and
+ classical pair and many-body potentials.  - Homepage: http://www.cp2k.org/}
+
+set root    /apps/leuven/thinking/2015a/software/CP2K/2.6.0-intel-2015a
+
+conflict CP2K
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded Libint/1.1.4-intel-2015a] } {
+    module load Libint/1.1.4-intel-2015a
+}
+
+if { ![is-loaded libxc/2.2.1-intel-2015a] } {
+    module load libxc/2.2.1-intel-2015a
+}
+
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTCP2K		"$root"
+setenv	EBVERSIONCP2K		"2.6.0"
+setenv	EBDEVELCP2K		"$root/easybuild/CP2K-2.6.0-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

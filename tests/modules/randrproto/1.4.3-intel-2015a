@@ -1,0 +1,40 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   X Resize and Rotate Extension (RandR) - Homepage: http://cgit.freedesktop.org/xorg/proto/randrproto/
+    }
+}
+
+module-whatis {Description: X Resize and Rotate Extension (RandR) - Homepage: http://cgit.freedesktop.org/xorg/proto/randrproto/}
+
+set root    /apps/leuven/thinking/2015a/software/randrproto/1.4.3-intel-2015a
+
+conflict randrproto
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded xproto/7.0.27-intel-2015a] } {
+    module load xproto/7.0.27-intel-2015a
+}
+
+if { ![is-loaded libXrender/0.9.8-intel-2015a] } {
+    module load libXrender/0.9.8-intel-2015a
+}
+
+if { ![is-loaded libX11/1.6.2-intel-2015a-Python-2.7.9] } {
+    module load libX11/1.6.2-intel-2015a-Python-2.7.9
+}
+
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTRANDRPROTO		"$root"
+setenv	EBVERSIONRANDRPROTO		"1.4.3"
+setenv	EBDEVELRANDRPROTO		"$root/easybuild/randrproto-1.4.3-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

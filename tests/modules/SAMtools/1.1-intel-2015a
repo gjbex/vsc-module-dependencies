@@ -1,0 +1,38 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   SAM Tools provide various utilities for manipulating alignments in the SAM format, 
+ including sorting, merging, indexing and generating alignments in a per-position format. - Homepage: http://www.htslib.org/
+    }
+}
+
+module-whatis {Description: SAM Tools provide various utilities for manipulating alignments in the SAM format, 
+ including sorting, merging, indexing and generating alignments in a per-position format. - Homepage: http://www.htslib.org/}
+
+set root    /apps/leuven/thinking/2015a/software/SAMtools/1.1-intel-2015a
+
+conflict SAMtools
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded ncurses/5.9-intel-2015a] } {
+    module load ncurses/5.9-intel-2015a
+}
+
+if { ![is-loaded zlib/1.2.8-intel-2015a] } {
+    module load zlib/1.2.8-intel-2015a
+}
+
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTSAMTOOLS		"$root"
+setenv	EBVERSIONSAMTOOLS		"1.1"
+setenv	EBDEVELSAMTOOLS		"$root/easybuild/SAMtools-1.1-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

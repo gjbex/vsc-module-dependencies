@@ -1,0 +1,27 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Matchers that can be combined to create flexible expressions of intent - Homepage: http://hamcrest.org/JavaHamcrest/
+    }
+}
+
+module-whatis {Description: Matchers that can be combined to create flexible expressions of intent - Homepage: http://hamcrest.org/JavaHamcrest/}
+
+set root    /apps/leuven/thinking/2015a/software/Java-Hamcrest/1.3-Java-1.8.0_31
+
+conflict Java-Hamcrest
+
+if { ![is-loaded Java/1.8.0_31] } {
+    module load Java/1.8.0_31
+}
+
+prepend-path	CLASSPATH		$root/hamcrest-all-1.3.jar
+
+setenv	EBROOTJAVAMINHAMCREST		"$root"
+setenv	EBVERSIONJAVAMINHAMCREST		"1.3"
+setenv	EBDEVELJAVAMINHAMCREST		"$root/easybuild/Java-Hamcrest-1.3-Java-1.8.0_31-easybuild-devel"
+
+prepend-path	PATH		$root/
+prepend-path	CLASSPATH		$root/hamcrest-all-1.3.jar
+
+# Built with EasyBuild version 1.16.1

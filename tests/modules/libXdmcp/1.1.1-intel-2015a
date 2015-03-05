@@ -1,0 +1,32 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   The libXdmcp package contains a library implementing the X Display Manager Control Protocol. This is
+useful for allowing clients to interact with the X Display Manager.
+ - Homepage: http://www.freedesktop.org/wiki/Software/xlibs
+    }
+}
+
+module-whatis {Description: The libXdmcp package contains a library implementing the X Display Manager Control Protocol. This is
+useful for allowing clients to interact with the X Display Manager.
+ - Homepage: http://www.freedesktop.org/wiki/Software/xlibs}
+
+set root    /apps/leuven/thinking/2015a/software/libXdmcp/1.1.1-intel-2015a
+
+conflict libXdmcp
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTLIBXDMCP		"$root"
+setenv	EBVERSIONLIBXDMCP		"1.1.1"
+setenv	EBDEVELLIBXDMCP		"$root/easybuild/libXdmcp-1.1.1-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

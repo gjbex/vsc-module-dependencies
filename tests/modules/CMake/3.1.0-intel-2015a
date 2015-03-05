@@ -1,0 +1,32 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   CMake, the cross-platform, open-source build system.
+ CMake is a family of tools designed to build, test and package software. - Homepage: http://www.cmake.org
+    }
+}
+
+module-whatis {Description: CMake, the cross-platform, open-source build system.
+ CMake is a family of tools designed to build, test and package software. - Homepage: http://www.cmake.org}
+
+set root    /apps/leuven/thinking/2015a/software/CMake/3.1.0-intel-2015a
+
+conflict CMake
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded ncurses/5.9-intel-2015a] } {
+    module load ncurses/5.9-intel-2015a
+}
+
+prepend-path	ACLOCAL_PATH		$root/share/aclocal
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTCMAKE		"$root"
+setenv	EBVERSIONCMAKE		"3.1.0"
+setenv	EBDEVELCMAKE		"$root/easybuild/CMake-3.1.0-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

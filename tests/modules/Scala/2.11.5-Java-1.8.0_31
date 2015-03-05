@@ -1,0 +1,30 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Scala programming tools - Homepage: http://www.scala-lang.org/
+    }
+}
+
+module-whatis {Description: Scala programming tools - Homepage: http://www.scala-lang.org/}
+
+set root    /apps/leuven/thinking/2015a/software/Scala/2.11.5-Java-1.8.0_31
+
+conflict Scala
+
+if { ![is-loaded Java/1.8.0_31] } {
+    module load Java/1.8.0_31
+}
+
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	MANPATH		$root/man
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTSCALA		"$root"
+setenv	EBVERSIONSCALA		"2.11.5"
+setenv	EBDEVELSCALA		"$root/easybuild/Scala-2.11.5-Java-1.8.0_31-easybuild-devel"
+
+prepend-path	PATH		$root/
+setenv	SCALA_HOME		"$root"
+
+# Built with EasyBuild version 1.16.1

@@ -1,0 +1,29 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   The X protocol C-language Binding (XCB) is a replacement for Xlib featuring a small footprint,
+latency hiding, direct access to the protocol, improved threading support, and extensibility. - Homepage: http://xcb.freedesktop.org/
+    }
+}
+
+module-whatis {Description: The X protocol C-language Binding (XCB) is a replacement for Xlib featuring a small footprint,
+latency hiding, direct access to the protocol, improved threading support, and extensibility. - Homepage: http://xcb.freedesktop.org/}
+
+set root    /apps/leuven/thinking/2015a/software/libpthread-stubs/0.3-foss-2015a
+
+conflict libpthread-stubs
+
+if { ![is-loaded foss/2015a] } {
+    module load foss/2015a
+}
+
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTLIBPTHREADMINSTUBS		"$root"
+setenv	EBVERSIONLIBPTHREADMINSTUBS		"0.3"
+setenv	EBDEVELLIBPTHREADMINSTUBS		"$root/easybuild/libpthread-stubs-0.3-foss-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

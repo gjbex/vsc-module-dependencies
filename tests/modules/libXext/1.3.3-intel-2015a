@@ -1,0 +1,37 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Common X Extensions library - Homepage: http://www.freedesktop.org/wiki/Software/xlibs
+    }
+}
+
+module-whatis {Description: Common X Extensions library - Homepage: http://www.freedesktop.org/wiki/Software/xlibs}
+
+set root    /apps/leuven/thinking/2015a/software/libXext/1.3.3-intel-2015a
+
+conflict libXext
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded libX11/1.6.2-intel-2015a-Python-2.7.9] } {
+    module load libX11/1.6.2-intel-2015a-Python-2.7.9
+}
+
+if { ![is-loaded libXdmcp/1.1.1-intel-2015a] } {
+    module load libXdmcp/1.1.1-intel-2015a
+}
+
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	MANPATH		$root/share/man
+prepend-path	PKG_CONFIG_PATH		$root/lib/pkgconfig
+
+setenv	EBROOTLIBXEXT		"$root"
+setenv	EBVERSIONLIBXEXT		"1.3.3"
+setenv	EBDEVELLIBXEXT		"$root/easybuild/libXext-1.3.3-intel-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

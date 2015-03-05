@@ -1,0 +1,39 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Armadillo is an open-source C++ linear algebra library (matrix maths) aiming towards
+ a good balance between speed and ease of use. Integer, floating point and complex numbers are supported,
+ as well as a subset of trigonometric and statistics functions. - Homepage: http://arma.sourceforge.net/
+    }
+}
+
+module-whatis {Description: Armadillo is an open-source C++ linear algebra library (matrix maths) aiming towards
+ a good balance between speed and ease of use. Integer, floating point and complex numbers are supported,
+ as well as a subset of trigonometric and statistics functions. - Homepage: http://arma.sourceforge.net/}
+
+set root    /apps/leuven/thinking/2015a/software/Armadillo/4.600.4-intel-2015a-Python-2.7.9
+
+conflict Armadillo
+
+if { ![is-loaded intel/2015a] } {
+    module load intel/2015a
+}
+
+if { ![is-loaded Boost/1.57.0-intel-2015a-Python-2.7.9] } {
+    module load Boost/1.57.0-intel-2015a-Python-2.7.9
+}
+
+if { ![is-loaded arpack-ng/3.1.5-intel-2015a] } {
+    module load arpack-ng/3.1.5-intel-2015a
+}
+
+prepend-path	CPATH		$root/include
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+
+setenv	EBROOTARMADILLO		"$root"
+setenv	EBVERSIONARMADILLO		"4.600.4"
+setenv	EBDEVELARMADILLO		"$root/easybuild/Armadillo-4.600.4-intel-2015a-Python-2.7.9-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1

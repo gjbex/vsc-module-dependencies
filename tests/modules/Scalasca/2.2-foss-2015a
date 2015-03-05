@@ -1,0 +1,41 @@
+#%Module
+
+proc ModulesHelp { } {
+    puts stderr {   Scalasca is a software tool that supports the performance optimization of
+ parallel programs by measuring and analyzing their runtime behavior. The analysis identifies
+ potential performance bottlenecks -- in particular those concerning communication and
+ synchronization -- and offers guidance in exploring their causes. - Homepage: http://www.scalasca.org/
+    }
+}
+
+module-whatis {Description: Scalasca is a software tool that supports the performance optimization of
+ parallel programs by measuring and analyzing their runtime behavior. The analysis identifies
+ potential performance bottlenecks -- in particular those concerning communication and
+ synchronization -- and offers guidance in exploring their causes. - Homepage: http://www.scalasca.org/}
+
+set root    /apps/leuven/thinking/2015a/software/Scalasca/2.2-foss-2015a
+
+conflict Scalasca
+
+if { ![is-loaded foss/2015a] } {
+    module load foss/2015a
+}
+
+if { ![is-loaded Cube/4.3-foss-2015a] } {
+    module load Cube/4.3-foss-2015a
+}
+
+if { ![is-loaded OTF2/1.5.1-foss-2015a] } {
+    module load OTF2/1.5.1-foss-2015a
+}
+
+prepend-path	LD_LIBRARY_PATH		$root/lib
+prepend-path	LIBRARY_PATH		$root/lib
+prepend-path	PATH		$root/bin
+
+setenv	EBROOTSCALASCA		"$root"
+setenv	EBVERSIONSCALASCA		"2.2"
+setenv	EBDEVELSCALASCA		"$root/easybuild/Scalasca-2.2-foss-2015a-easybuild-devel"
+
+
+# Built with EasyBuild version 1.16.1
