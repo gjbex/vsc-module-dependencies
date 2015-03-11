@@ -17,3 +17,7 @@ the directory that contains the module directories.
 $ dep_graph  --dir module_dir  --reverse  zlib/1.2.8-foss-2015a
 ```
 This will compute the reverse dependencies, i.e., all modules that depend on this `zlib` module.
+
+Requirements
+------------
+Python 2.7.x with the sqlite3 module.
