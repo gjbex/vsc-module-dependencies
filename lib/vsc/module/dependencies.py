@@ -1,13 +1,23 @@
-import sqlite3
+import sqlite3, sys
+import networkx as nx
 
 class ModuleDependencies(object):
 
     def __init__(self, modules):
         '''Constructor, takes a dict of module names as keys and lists
            of modules as values'''
+        self._is_verbose = False
         self._conn = sqlite3.connect(':memory:')
         self._init_module_table(modules)
-        self._init_dependency_table(modules)
+        self._init_dependencies_table(modules)
+
+    @property
+    def is_verbose(self):
+        return self._is_verbose
+
+    @is_verbose.setter
+    def is_verbose(self, is_verbose):
+        self._is_verbose = is_verbose
 
     def _init_module_table(self, modules):
         cursor = self._conn.cursor()
@@ -15,68 +25,95 @@ class ModuleDependencies(object):
         all_modules.update(modules.keys())
         for module_list in modules.values():
             all_modules.update(module_list)
+        cursor = self._conn.cursor()
         cursor.execute(
             '''CREATE TABLE modules (
-                   module_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                   module_name TEXT NOT NULL,
-                   module_version TEXT NOT NULL,
-                   UNIQUE(module_name, module_version)
+                   module TEXT NOT NULL,
+                   UNIQUE(module)
                )''' 
         )
-        insert_stmt = '''INSERT INTO modules
-                             (module_name, module_version) VALUES (?, ?)'''
+        insert_stmt = '''INSERT INTO modules (module) VALUES (?)'''
         for module in all_modules:
-            module_name, module_version = module.split('/')
-            cursor.execute(insert_stmt, (module_name, module_version))
-        cursor.close()
+            cursor.execute(insert_stmt, (module, ))
         self._conn.commit()
+        cursor.close()
 
-    def _init_dependency_table(self, modules):
+    def _init_dependencies_table(self, modules):
         cursor = self._conn.cursor()
         cursor.execute(
             '''CREATE TABLE dependencies (
-                   dependency_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                   module_id INTEGER NOT NULL,
-                   depends_on_id INTEGER NOT NULL,
-                   FOREIGN KEY (module_id)
-                       REFERENCES modules (module_id),
-                   FOREIGN KEY (depends_on_id)
-                       REFERENCES modules (module_id),
-                   UNIQUE (module_id, depends_on_id)
+                   module TEXT NOT NULL,
+                   depends_on TEXT NOT NULL,
+                   FOREIGN KEY (module)
+                       REFERENCES modules (module),
+                   FOREIGN KEY (depends_on)
+                       REFERENCES modules (module),
+                   UNIQUE (module, depends_on)
                )'''
         )
         for module, dependency_list in modules.iteritems():
-            module_id = self.get_module_id(module)
             for depends_on in dependency_list:
-                depends_on_id = self.get_module_id(depends_on)
                 cursor.execute(
                     '''INSERT INTO dependencies
-                           (module_id, depends_on_id) VALUES (?, ?)''',
-                    (module_id, depends_on_id)
+                           (module, depends_on) VALUES (?, ?)''',
+                    (module, depends_on)
                 )
-        cursor.close()
         self._conn.commit()
+        cursor.close()
 
-    def get_module_id(self, module):
-        module_name, module_version = module.split('/')
-        cursor = self._conn.cursor()
-        results = cursor.execute(
-            '''SELECT module_id FROM modules
-                   WHERE module_name = ? AND module_version = ?''',
-            (module_name, module_version)
-        )
-        module_id = results.fetchone()
-        if module_id:
-            return module_id[0]
-        else:
-            return None
-        
-    def all_modules(self):
+    def get_all_modules(self):
         modules = []
         cursor = self._conn.cursor()
-        results = cursor.execute(
-            '''SELECT module_name, module_version FROM modules'''
-        )
+        results = cursor.execute('''SELECT module FROM modules''')
         for row in results:
-            modules.append((row[0], row[1]))
+            modules.append(row[0])
+        cursor.close()
         return modules
+
+    def get_direct_dependencies(self, module):
+        dependencies = []
+        cursor = self._conn.cursor()
+        results = cursor.execute(
+            '''SELECT depends_on FROM dependencies WHERE module = ?''',
+            (module, )
+        )
+        for row  in results:
+            dependencies.append(row[0])
+        cursor.close()
+        return dependencies
+
+    def get_direct_reverse_dependencies(self, module):
+        dependencies = []
+        cursor = self._conn.cursor()
+        results = cursor.execute(
+            '''SELECT module FROM dependencies WHERE depends_on = ?''',
+            (module, )
+        )
+        for row  in results:
+            dependencies.append(row[0])
+        cursor.close()
+        return dependencies
+
+    def get_dependencies(self, module, graph=None):
+        if not graph:
+            graph = nx.DiGraph()
+            graph.add_node(module)
+        if self.is_verbose:
+            sys.stderr.write('handling {0}...\n'.format(module))
+            print self.get_direct_dependencies(module)
+        for depends_on in self.get_direct_dependencies(module):
+            graph.add_edge(module, depends_on)
+            self.get_dependencies(depends_on, graph)
+        return graph
+
+    def get_reverse_dependencies(self, module, graph=None):
+        if not graph:
+            graph = nx.DiGraph()
+            graph.add_node(module)
+        if self.is_verbose:
+            sys.stderr.write('handling {0}...\n'.format(module))
+            print self.get_direct_reverse_dependencies(module)
+        for depends_on in self.get_direct_reverse_dependencies(module):
+            graph.add_edge(module, depends_on)
+            self.get_reverse_dependencies(depends_on, graph)
+        return graph

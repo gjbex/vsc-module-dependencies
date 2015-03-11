@@ -49,5 +49,29 @@ class ModuleTest(unittest.TestCase):
         for module_list in modules.values():
             expected_modules.update(module_list)
         dependencies = ModuleDependencies(modules)
-        all_modules = dependencies.all_modules()
+        all_modules = dependencies.get_all_modules()
         self.assertEqual(len(expected_modules), len(all_modules))
+
+    def test_direct_ependencies(self):
+        dir_name = 'modules/'
+        expected_modules = {
+            'Boost/1.57.0-foss-2015a-Python-2.7.9': [
+                'foss/2015a',
+                'bzip2/1.0.6-foss-2015a',
+                'zlib/1.2.8-foss-2015a',
+                'Python/2.7.9-foss-2015a',
+            ],
+            'cURL/7.40.0-intel-2015a': [
+                'intel/2015a',
+            ],
+            'Java/1.8.0_31': [],
+        }
+        parser = ModuleParser()
+        modules = parser.parse_dir(dir_name)
+        dependencies = ModuleDependencies(modules)
+        for module in expected_modules:
+            depend_ons = dependencies.get_direct_dependencies(module)
+            self.assertSetEqual(set(expected_modules[module]),
+                                set(depend_ons))
+        graph = dependencies.get_dependencies('foss/2015a')
+        print graph.nodes()
