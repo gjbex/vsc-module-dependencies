@@ -20,4 +20,5 @@ This will compute the reverse dependencies, i.e., all modules that depend on thi
 
 Requirements
 ------------
-Python 2.7.x with the sqlite3 module.
+* Python 2.7.x with the sqlite3 module
+* NetworkX Python library
