@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from natsort import versorted
+
 DIR_ERROR = 1
 
 def show_graph(graph, root, reverse=False, prune=True,
@@ -19,6 +21,11 @@ def show_graph(graph, root, reverse=False, prune=True,
             show_graph(graph, to_node, reverse, prune,
                        prefix + '  ', done)
     
+def show_list(graph, root):
+    modules = set(graph.nodes())
+    modules.remove(root)
+    print '\n'.join(versorted(modules, key=lambda x: x.lower()))
+
 if __name__ == '__main__':
     from argparse import ArgumentParser
     import os.path, sys
@@ -35,6 +42,8 @@ if __name__ == '__main__':
                             help='compute reverse dependencies')
     arg_parser.add_argument('--no_prune', action='store_true',
                             help='do not prune dependency tree')
+    arg_parser.add_argument('--no_flatten', action='store_true',
+                            help='do not faltten dependency tree')
     arg_parser.add_argument('--verbose', action='store_true',
                             help='generate extra debugging output')
     options = arg_parser.parse_args()
@@ -54,5 +63,8 @@ if __name__ == '__main__':
         graph = dependencies.get_reverse_dependencies(options.module)
     else:
         graph = dependencies.get_dependencies(options.module)
-    show_graph(graph, options.module, reverse=options.reverse,
-               prune=not(options.no_prune))
+    if options.no_flatten:
+        show_graph(graph, options.module, reverse=options.reverse,
+                   prune=not(options.no_prune))
+    else:
+        show_list(graph, options.module)
