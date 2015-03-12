@@ -27,4 +27,5 @@ Requirements
 ------------
 * Python 2.7.x with the sqlite3 module
 * NetworkX Python library
-* natsort Python library
+* natsort Python library (can be avoided by using the `--no_natsort` or
+    `-N` option)
