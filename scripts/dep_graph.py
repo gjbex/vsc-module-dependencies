@@ -39,7 +39,9 @@ if __name__ == '__main__':
                                             'for a module')
     arg_parser.add_argument('module',
                             help='module to compute  dependency graph for')
-    arg_parser.add_argument('--dir', '-d', help='module file directory')
+    arg_parser.add_argument('--dir', '-d', default='.',
+                            help='module file directory, default is '
+                                 'present working directory')
     arg_parser.add_argument('--reverse', '-r', action='store_true',
                             help='compute reverse dependencies')
     arg_parser.add_argument('--no_prune', '-P', action='store_true',
