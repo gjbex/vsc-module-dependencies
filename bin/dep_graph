@@ -20,8 +20,8 @@
 case "${VSC_INSTITUTE_CLUSTER}" in
     thinking)
         module purge
-        module load thinking/2014a
-        module load Python/2.7.6-foss-2014a
+        module use /apps/leuven/etc/modulefiles/
+        module load python/2.7.6_sysadm
         ;;
 esac
 
