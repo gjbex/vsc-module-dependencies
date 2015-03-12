@@ -20,7 +20,7 @@ This will compute the reverse dependencies, i.e., all modules that depend on thi
 
 To get help:
 ```bash
-$ dep_graph  --dir module_dir  -h
+$ dep_graph  -h
 ```
 
 Requirements
