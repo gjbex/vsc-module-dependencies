@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 #
 # Copyright (C) 2013 Geert Jan Bex <geertjan.bex@uhasselt.be>
 # 
@@ -20,8 +20,7 @@
 case "${VSC_INSTITUTE_CLUSTER}" in
     thinking)
         module purge
-        module use /apps/leuven/etc/modulefiles/
-        module load python/2.7.6_sysadm
+        module load Python/2.7.6-foss-2014a
         ;;
 esac
 
