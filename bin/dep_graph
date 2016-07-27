@@ -22,12 +22,22 @@ case "${VSC_INSTITUTE_CLUSTER}" in
         module purge
         module load Python/2.7.6-foss-2014a
         ;;
+    breniac)
+        module purge
+        module load Python/2.7.11-foss-2016a
+        ;;
 esac
+
+# ensure that OpenBLAS doesn't blow up
+export OMP_NUM_THREADS=1
+
+# determine true location of Bash script
+exec=$(readlink -f ${0})
 
 # determine directory of vsc-module-dependencies
 if [ -z "${VSC_MODULE_DEPENDENCIES_DIR}" ]
 then
-    DIR=$( cd -P "$( dirname "$0" )" && pwd )
+    DIR=$( cd -P "$( dirname "${exec}" )" && pwd )
     export VSC_MODULE_DEPENDENCIES_DIR="${DIR}/.."
 fi
 
