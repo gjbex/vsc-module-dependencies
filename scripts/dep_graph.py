@@ -72,8 +72,8 @@ if __name__ == '__main__':
                 msg = "### error: '{0}' is not directory"
                 sys.stderr.write(msg.format(dir_name))
                 sys.exit(DIR_ERROR)
-    parser = ModuleParser()
-    for dir_name in dir_names:
+    for dir_name in reversed(dir_names):
+        parser = ModuleParser()
         print('Module path: {0}'.format(dir_name))
         modules = parser.parse_dir(dir_name)
         dependencies = ModuleDependencies(modules)
