@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+import os
+
+
 DIR_ERROR = 1
 
 def show_graph(graph, root, reverse=False, prune=True,
@@ -19,14 +22,17 @@ def show_graph(graph, root, reverse=False, prune=True,
             show_graph(graph, to_node, reverse, prune,
                        prefix + '  ', done)
     
-def show_list(graph, root, no_natsort=False):
+
+def show_list(graph, root, no_natsort=False, prefix=''):
     modules = set(graph.nodes())
     modules.remove(root)
     if no_natsort:
-        print '\n'.join(sorted(modules, key=lambda x: x.lower()))
+        module_list = sorted(modules, key=lambda x: x.lower())
+        print '\n'.join((prefix + x for x in module_list))
     else:
         from natsort import versorted
-        print '\n'.join(versorted(modules, key=lambda x: x.lower()))
+        module_list = versorted(modules, key=lambda x: x.lower())
+        print '\n'.join((prefix + x for x in module_list))
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
@@ -39,9 +45,9 @@ if __name__ == '__main__':
                                             'for a module')
     arg_parser.add_argument('module',
                             help='module to compute  dependency graph for')
-    arg_parser.add_argument('--dir', '-d', default='.',
-                            help='module file directory, default is '
-                                 'present working directory')
+    arg_parser.add_argument('--dir', '-d',
+                            help='module file directory list, default is '
+                                 'MODULEPATH')
     arg_parser.add_argument('--reverse', '-r', action='store_true',
                             help='compute reverse dependencies')
     arg_parser.add_argument('--no_prune', '-P', action='store_true',
@@ -53,24 +59,32 @@ if __name__ == '__main__':
     arg_parser.add_argument('--verbose', action='store_true',
                             help='generate extra debugging output')
     options = arg_parser.parse_args()
-    if not os.path.exists(options.dir):
-        msg = "### error: directory '{0}' does not exist"
-        sys.stderr.write(msg.format(options.dir))
-        sys.exit(DIR_ERROR)
-    if not os.path.isdir(options.dir):
-        msg = "### error: '{0}' is not directory"
-        sys.stderr.write(msg.format(options.dir))
-        sys.exit(DIR_ERROR)
+    if not options.dir:
+        dir_names = os.getenv('MODULEPATH', '.').split(os.pathsep)
+    else:
+        dir_names = options.dir.split(os.pathsep)
+        for dir_name in dir_names:
+            if not os.path.exists(dir_name):
+                msg = "### error: directory '{0}' does not exist"
+                sys.stderr.write(msg.format(dir_name))
+                sys.exit(DIR_ERROR)
+            if not os.path.isdir(dir_name):
+                msg = "### error: '{0}' is not directory"
+                sys.stderr.write(msg.format(dir_name))
+                sys.exit(DIR_ERROR)
     parser = ModuleParser()
-    modules = parser.parse_dir(options.dir)
-    dependencies = ModuleDependencies(modules)
-    dependencies.is_verbose = options.verbose
-    if options.reverse:
-        graph = dependencies.get_reverse_dependencies(options.module)
-    else:
-        graph = dependencies.get_dependencies(options.module)
-    if options.flatten:
-        show_list(graph, options.module, options.no_natsort)
-    else:
-        show_graph(graph, options.module, reverse=options.reverse,
-                   prune=not(options.no_prune))
+    for dir_name in dir_names:
+        print('Module path: {0}'.format(dir_name))
+        modules = parser.parse_dir(dir_name)
+        dependencies = ModuleDependencies(modules)
+        dependencies.is_verbose = options.verbose
+        if options.reverse:
+            graph = dependencies.get_reverse_dependencies(options.module)
+        else:
+            graph = dependencies.get_dependencies(options.module)
+        if options.flatten:
+            show_list(graph, options.module, options.no_natsort,
+                      prefix='  ')
+        else:
+            show_graph(graph, options.module, reverse=options.reverse,
+                       prune=not(options.no_prune), prefix='  ')
