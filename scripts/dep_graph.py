@@ -46,7 +46,7 @@ if __name__ == '__main__':
                             help='compute reverse dependencies')
     arg_parser.add_argument('--no_prune', '-P', action='store_true',
                             help='do not prune dependency tree')
-    arg_parser.add_argument('--flatten', '-F', action='store_true',
+    arg_parser.add_argument('--flatten', '-f', action='store_true',
                             help='faltten dependency tree')
     arg_parser.add_argument('--no_natsort', '-N', action='store_true',
                             help='do not use natsort')
