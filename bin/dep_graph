@@ -20,11 +20,11 @@
 case "${VSC_INSTITUTE_CLUSTER}" in
     thinking)
         module purge
-        module load Python/2.7.6-foss-2014a
+        PYTHON="/apps/leuven/common/python/2.7.9_sysadm/bin/python"
         ;;
     breniac)
         module purge
-        module load Python/2.7.11-foss-2016a
+        PYTHON="/apps/leuven/common/python/2.7.11_sysadm/bin/python"
         ;;
 esac
 
@@ -55,4 +55,4 @@ fi
 PYTHONPATH="${VSC_MODULE_DEPENDENCIES_LIB_DIR}:${PYTHONPATH}"
 export PYTHONPATH
 
-python ${VSC_MODULE_DEPENDENCIES_SCRIPTS_DIR}/dep_graph.py "$@"
+${PYTHON} ${VSC_MODULE_DEPENDENCIES_SCRIPTS_DIR}/dep_graph.py "$@"
