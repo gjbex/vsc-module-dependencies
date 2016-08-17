@@ -26,6 +26,7 @@ class ModuleDependencies(object):
         for module_list in modules.values():
             all_modules.update(module_list)
         cursor = self._conn.cursor()
+        cursor.execute('''DROP TABLE IF EXISTS modules''')
         cursor.execute(
             '''CREATE TABLE modules (
                    module TEXT NOT NULL,
@@ -53,11 +54,16 @@ class ModuleDependencies(object):
         )
         for module, dependency_list in modules.iteritems():
             for depends_on in dependency_list:
-                cursor.execute(
-                    '''INSERT INTO dependencies
-                           (module, depends_on) VALUES (?, ?)''',
-                    (module, depends_on)
-                )
+                try:
+                    cursor.execute(
+                        '''INSERT INTO dependencies
+                               (module, depends_on) VALUES (?, ?)''',
+                        (module, depends_on)
+                    )
+                except sqlite3.IntegrityError as error:
+                    msg = ("### warning: module '{0}' seems to be loaded "
+                           "multiple times in module file for '{1}'")
+                    sys.stderr.write(msg.format(depends_on, module))
         self._conn.commit()
         cursor.close()
 
