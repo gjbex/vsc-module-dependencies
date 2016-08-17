@@ -46,8 +46,8 @@ if __name__ == '__main__':
                             help='compute reverse dependencies')
     arg_parser.add_argument('--no_prune', '-P', action='store_true',
                             help='do not prune dependency tree')
-    arg_parser.add_argument('--no_flatten', '-F', action='store_true',
-                            help='do not faltten dependency tree')
+    arg_parser.add_argument('--flatten', '-F', action='store_true',
+                            help='faltten dependency tree')
     arg_parser.add_argument('--no_natsort', '-N', action='store_true',
                             help='do not use natsort')
     arg_parser.add_argument('--verbose', action='store_true',
@@ -69,8 +69,8 @@ if __name__ == '__main__':
         graph = dependencies.get_reverse_dependencies(options.module)
     else:
         graph = dependencies.get_dependencies(options.module)
-    if options.no_flatten:
+    if options.flatten:
+        show_list(graph, options.module, options.no_natsort)
+    else:
         show_graph(graph, options.module, reverse=options.reverse,
                    prune=not(options.no_prune))
-    else:
-        show_list(graph, options.module, options.no_natsort)
