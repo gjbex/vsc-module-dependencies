@@ -26,6 +26,10 @@ case "${VSC_INSTITUTE_CLUSTER}" in
         module purge
         PYTHON="/apps/leuven/common/python/2.7.11_sysadm/bin/python"
         ;;
+    genius)
+        module purge
+        PYTHON="/apps/leuven/skylake/2018a/software/Python/2.7.14-foss-2018a/bin/python"
+        PYTHONPATH="/apps/leuven/common/admintools/python_lib/lib/python2.7/site-packages:$PYTHONPATH"
 esac
 
 # ensure that OpenBLAS doesn't blow up
