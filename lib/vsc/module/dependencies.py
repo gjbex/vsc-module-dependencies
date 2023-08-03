@@ -68,35 +68,29 @@ class ModuleDependencies(object):
         cursor.close()
 
     def get_all_modules(self):
-        modules = []
         cursor = self._conn.cursor()
         results = cursor.execute('''SELECT module FROM modules''')
-        for row in results:
-            modules.append(row[0])
+        modules = [row[0] for row in results]
         cursor.close()
         return modules
 
     def get_direct_dependencies(self, module):
-        dependencies = []
         cursor = self._conn.cursor()
         results = cursor.execute(
             '''SELECT depends_on FROM dependencies WHERE module = ?''',
             (module, )
         )
-        for row  in results:
-            dependencies.append(row[0])
+        dependencies = [row[0] for row in results]
         cursor.close()
         return dependencies
 
     def get_direct_reverse_dependencies(self, module):
-        dependencies = []
         cursor = self._conn.cursor()
         results = cursor.execute(
             '''SELECT module FROM dependencies WHERE depends_on = ?''',
             (module, )
         )
-        for row  in results:
-            dependencies.append(row[0])
+        dependencies = [row[0] for row in results]
         cursor.close()
         return dependencies
 

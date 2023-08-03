@@ -16,8 +16,7 @@ class ModuleParser(object):
         with open(file_name, 'r') as module_file:
             for line in module_file:
                 line = line.strip()
-                match = self._module_regex.match(line)
-                if match:
+                if match := self._module_regex.match(line):
                     module_cands = re.split(r'\s+', match.group(1))
                     for module_cand in module_cands:
                         if module_cand.startswith('#'):
